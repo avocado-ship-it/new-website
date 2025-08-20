@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>personal website</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #8e44ad 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            background: linear-gradient(45deg, #27ae60, #2ecc71, #8e44ad, #9b59b6);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease infinite;
+            margin-bottom: 0.5rem;
+            font-style: italic;
+            text-shadow: 0 0 30px rgba(46,204,113,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: bold;
+        }
+
+        .tab-container {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .tab-nav {
+            display: flex;
+            background: linear-gradient(135deg, #27ae60, #8e44ad);
+            overflow-x: auto;
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            min-width: 120px;
+            font-size: 1rem;
+        }
+
+        .tab-button:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+
+        .tab-button.active {
+            background: rgba(255,255,255,0.2);
+            box-shadow: inset 0 -3px 0 rgba(255,255,255,0.8);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 2.5rem;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .section-title {
+            color: #27ae60;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(to right, #27ae60, #8e44ad);
+            display: block;
+            margin: 0.5rem auto;
+            border-radius: 2px;
+        }
+
+        .about-list {
+            list-style: none;
+            counter-reset: item;
+        }
+
+        .about-list li {
+            background: linear-gradient(135deg, #f8fff8 0%, #f3e5f5 100%);
+            margin: 1rem 0;
+            padding: 1rem 1.5rem 1rem 3rem;
+            border-radius: 15px;
+            border-left: 4px solid #27ae60;
+            transition: all 0.3s ease;
+            position: relative;
+            counter-increment: item;
+        }
+
+        .about-list li:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 25px rgba(39, 174, 96, 0.2);
+        }
+
+        .about-list li:before {
+            content: counter(item);
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(45deg, #27ae60, #8e44ad);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .about-list a {
+            color: #8e44ad;
+            text-decoration: none;
+            font-weight: bold;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .about-list a:hover {
+            border-bottom-color: #8e44ad;
+            color: #27ae60;
+        }
+
+        .skill-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .skill-card {
+            background: linear-gradient(135deg, #a8e6cf 0%, #7fcdcd 100%);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px) rotate(1deg);
+            border-color: rgba(39,174,96,0.5);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .skill-card h3 {
+            color: #16a085;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, #d5a6bd 0%, #b19cd9 100%);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+            border-left: 4px solid #8e44ad;
+        }
+
+        .project-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 30px rgba(142,68,173,0.3);
+        }
+
+        .project-card h3 {
+            color: #663399;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .contact-card {
+            background: linear-gradient(135deg, #81c784 0%, #aed581 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(39,174,96,0.3);
+        }
+
+        .contact-card h3 {
+            color: #2e7d32;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .fun-section {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #9c27b0 0%, #673ab7 100%);
+            border-radius: 15px;
+            margin-top: 1rem;
+        }
+
+        .fun-section h3 {
+            color: white;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .fun-words {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .fun-word {
+            background: rgba(255,255,255,0.9);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: bold;
+            color: #673ab7;
+            border: 2px solid rgba(103,58,183,0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .fun-word:hover {
+            background: #27ae60;
+            color: white;
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .tab-content {
+                padding: 1.5rem;
+            }
+            
+            .tab-nav {
+                flex-wrap: wrap;
+            }
+            
+            .tab-button {
+                flex: 1 1 50%;
+                min-width: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>halia's website</h1>
+            <p class="subtitle">this is a website a bit about me</p>
+        </header>
+
+        <div class="tab-container">
+            <div class="tab-nav">
+                <button class="tab-button active" onclick="openTab(event, 'about')">About</button>
+                <button class="tab-button" onclick="openTab(event, 'skills')">Skills</button>
+                <button class="tab-button" onclick="openTab(event, 'projects')">Projects</button>
+                <button class="tab-button" onclick="openTab(event, 'contact')">Contact</button>
+                <button class="tab-button" onclick="openTab(event, 'random')">Random</button>
+            </div>
+
+            <div id="about" class="tab-content active">
+                <h2 class="section-title">About Me</h2>
+                <ul class="about-list">
+                    <li>i am a 13 year old <a href="https://hackclub.com" target="_blank">hackclubber</a> named halia</li>
+                    <li>i am transfem and bisexual (i aced the bi quiz)</li>
+                    <li>i like totally suck at programming (but i'm learning!)</li>
+                    <li>i do mainly webdev</li>
+                </ul>
+                
+                <div class="fun-section">
+                    <h3>what i am doing at this moment (will not be frequently updated sdiybt)</h3>
+                    <p style="color: white;">organizing <a href="https://daydream.hackclub.com/dc" target="_blank">daydream DC!</a> </p>
+                </div>
+            </div>
+
+            <div id="skills" class="tab-content">
+                <h2 class="section-title">Skills & Interests</h2>
+                <div class="skill-grid">
+                    <div class="skill-card">
+                        <h3>web dev</h3>
+                        <p>HTML, CSS, JavaScript (when it cooperates with me [it never does])</p>
+                    </div>
+                    <div class="skill-card">
+                        <h3>python</h3>
+                        <p>i made <a href="https://avogata.itch.io/scuffed-2048" target="_blank">this</a> and <a href="https://avogata.itch.io/generic-racing-game" target="_blank">this</a></p>
+                    </div>
+                    <div class="skill-card">
+                        <h3>hackclubbing</h3>
+                        <p>she hack on my club till i orph</p>
+                    </div>
+                    <div class="skill-card">
+                        <h3>Being like super trans af</h3>
+                        <p>i am woman :3c</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="projects" class="tab-content">
+                <h2 class="section-title">My Projects</h2>
+                <div class="project-card">
+                    <h3>generic racing game</h3>
+                    <p>check it out <a href="https://avogata.itch.io/generic-racing-game" target="_blank">here</a></p>
+                </div>
+                <div class="project-card">
+                    <h3>scuffed 2048</h3>
+                    <p>check it out <a href="https://avogata.itch.io/scuffed-2048" target="_blank">here</a></p>
+                </div>
+                <div class="project-card">
+                    <h3>my hackpad</h3>
+                    <p>check it out <a href="https://github.com/avocado-ship-it/hackpad-project" target="_blank">here</a></p>
+                </div>
+                 <div class="project-card">
+                    <h3>signus</h3>
+                    <p>check it out <a href="https://github.com/hdsjejgh/Signus" target="_blank">here</a></p>
+                </div>
+            </div>
+
+            <div id="contact" class="tab-content">
+                <h2 class="section-title">Get In Touch</h2>
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <h3>instagram</h3>
+                        <p>i dont do anything on here but sure ig @avogatome</p>
+                    </div>
+                    <div class="contact-card">
+                        <h3>hack club</h3>
+                        <p>i will definetly probably respond if you dm me on slack at @avogato</p>
+                    </div>
+                    <div class="contact-card">
+                        <h3>email</h3>
+                        <p>For Serious Inquiries Only (jk nothing i do is serious) halia.abdi.me@gmail.com</p>
+                    </div>
+                    <div class="contact-card">
+                        <h3>signal</h3>
+                        <p>@avogato.12</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="random" class="tab-content">
+                <h2 class="section-title">things i think of alot</h2>
+                <div class="fun-section">
+                    <h3>my favorite words</h3>
+                    <div class="fun-words">
+                        <span class="fun-word">start</span>
+                        <span class="fun-word">digging</span>
+                        <span class="fun-word">in</span>
+                        <span class="fun-word">yo</span>
+                        <span class="fun-word">butt</span>
+                        <span class="fun-word">twin</span>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 2rem; text-align: center; padding: 1.5rem; background: rgba(255,255,255,0.1); border-radius: 15px;">
+                    <h3 style="color: #27ae60; margin-bottom: 1rem;">Fun Facts</h3>
+                    <p>• i have 18 unfinished projects and have no intention to ever touch them</p>
+                    <p>• i was born on january 20th!</p>
+                    <p>• i like dr house and pokemon and kpdh</p>
+                    <p>• i made this website because i wanted 10 more som shells</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            
+            // Hide all tab content
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            
+            // Remove active class from all tab buttons
+            tablinks = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            
+            // Show the selected tab and mark button as active
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Add click sound effect to fun words
+        document.querySelectorAll('.fun-word').forEach(word => {
+            word.addEventListener('click', function() {
+                this.style.animation = 'none';
+                setTimeout(() => {
+                    this.style.animation = '';
+                }, 10);
+            });
+        });
+    </script>
+</body>
+</html>
